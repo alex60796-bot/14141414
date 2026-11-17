@@ -1,0 +1,2323 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SCUDERIA KDU · 경동대 디자인학과 3학년 인물지도</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700;1,800&family=JetBrains+Mono:wght@500;700;800&family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --rosso: #e10600;
+      --rosso-glow: rgba(225, 6, 0, 0.5);
+      --rosso-soft: rgba(225, 6, 0, 0.16);
+      --giallo: #ffd100;
+      --giallo-soft: rgba(255, 209, 0, 0.18);
+      --purple-sector: #d946ef;
+      --purple-soft: rgba(217, 70, 239, 0.18);
+      --pit-green: #00e676;
+      --pit-cyan: #00d2ff;
+
+      --bg: #07080b;
+      --carbon-1: #0b0d12;
+      --carbon-2: #10131a;
+      --surface: rgba(16, 19, 27, 0.76);
+      --surface-solid: #12151e;
+      --surface-2: rgba(25, 30, 42, 0.78);
+      --text: #f8f9fa;
+      --text-muted: #a1a8b8;
+      --border: rgba(255, 255, 255, 0.1);
+      --border-strong: rgba(255, 255, 255, 0.2);
+      --shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+
+      --map-land: rgba(26, 31, 44, 0.85);
+      --map-seoul: rgba(38, 46, 65, 0.9);
+      --map-grid: rgba(255, 255, 255, 0.045);
+    }
+
+    [data-theme="light"] {
+      --bg: #efede7;
+      --carbon-1: #e8e5dd;
+      --carbon-2: #dfdbd1;
+      --surface: rgba(255, 255, 255, 0.82);
+      --surface-solid: #ffffff;
+      --surface-2: rgba(244, 242, 236, 0.86);
+      --text: #111318;
+      --text-muted: #525866;
+      --border: rgba(17, 19, 24, 0.11);
+      --border-strong: rgba(17, 19, 24, 0.22);
+      --shadow: 0 14px 36px rgba(17, 19, 24, 0.08);
+      --rosso-soft: rgba(225, 6, 0, 0.1);
+      --giallo: #c98f00;
+      --giallo-soft: rgba(255, 209, 0, 0.24);
+      --purple-sector: #c026d3;
+      --pit-green: #059669;
+      --pit-cyan: #0284c7;
+
+      --map-land: rgba(222, 218, 208, 0.88);
+      --map-seoul: rgba(206, 201, 189, 0.92);
+      --map-grid: rgba(17, 19, 24, 0.06);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      background-image:
+        linear-gradient(45deg, var(--carbon-1) 25%, transparent 25%),
+        linear-gradient(-45deg, var(--carbon-1) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, var(--carbon-2) 75%),
+        linear-gradient(-45deg, transparent 75%, var(--carbon-2) 75%);
+      background-size: 16px 16px;
+      background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+      color: var(--text);
+      line-height: 1.5;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .mono { font-family: 'JetBrains Mono', monospace; font-variant-numeric: tabular-nums; }
+
+    /* =================================================
+       SENSORY FERRARI BACKDROP STAGE (Fixed Parallax)
+    ================================================= */
+    .scuderia-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    /* Crimson Maranello Ambient Glow */
+    .backdrop-glow {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 18% 30%, rgba(225, 6, 0, 0.24) 0%, transparent 48%),
+        radial-gradient(circle at 86% 68%, rgba(225, 6, 0, 0.28) 0%, transparent 50%),
+        radial-gradient(circle at 50% 10%, rgba(255, 209, 0, 0.07) 0%, transparent 42%);
+    }
+    [data-theme="light"] .backdrop-glow {
+      background:
+        radial-gradient(circle at 18% 30%, rgba(225, 6, 0, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 86% 68%, rgba(225, 6, 0, 0.14) 0%, transparent 52%);
+    }
+
+    /* Giant Editorial Watermark Typography */
+    .backdrop-watermark {
+      position: absolute;
+      right: 2vw;
+      top: 12vh;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-style: italic;
+      font-weight: 800;
+      font-size: clamp(140px, 22vw, 310px);
+      line-height: 0.85;
+      color: transparent;
+      -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.055);
+      letter-spacing: -0.04em;
+      user-select: none;
+    }
+    [data-theme="light"] .backdrop-watermark {
+      -webkit-text-stroke: 1.5px rgba(225, 6, 0, 0.08);
+    }
+
+    .backdrop-subword {
+      position: absolute;
+      left: 3vw;
+      bottom: 6vh;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-style: italic;
+      font-weight: 800;
+      font-size: clamp(54px, 8vw, 120px);
+      letter-spacing: 0.08em;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255, 209, 0, 0.07);
+      user-select: none;
+    }
+
+    /* Image 1: Ferrari Top-Down Studio Car (Black melts via screen/lighten) */
+    .bg-car-wrap {
+      position: absolute;
+      left: -8%;
+      top: 10%;
+      width: min(74vw, 960px);
+      transform: rotate(-16deg);
+      opacity: 0.52;
+      mix-blend-mode: lighten;
+      -webkit-mask-image: radial-gradient(ellipse 70% 65% at 50% 50%, #000 45%, transparent 95%);
+      mask-image: radial-gradient(ellipse 70% 65% at 50% 50%, #000 45%, transparent 95%);
+      transition: opacity 0.4s ease;
+    }
+    [data-theme="light"] .bg-car-wrap {
+      mix-blend-mode: multiply;
+      opacity: 0.16;
+      filter: contrast(1.15);
+    }
+    .bg-car-wrap img {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: contrast(1.15) saturate(1.18);
+    }
+
+    /* Image 2: Charles Leclerc Editorial Cutout Blend */
+    .bg-leclerc-wrap {
+      position: absolute;
+      right: -2%;
+      bottom: -2%;
+      height: min(82vh, 760px);
+      width: auto;
+      opacity: 0.48;
+      -webkit-mask-image:
+        radial-gradient(ellipse 75% 78% at 55% 45%, #000 30%, transparent 82%),
+        linear-gradient(to top, transparent 0%, #000 22%, #000 85%, transparent 100%);
+      -webkit-mask-composite: source-in;
+      mask-image: radial-gradient(ellipse 75% 78% at 55% 45%, #000 30%, transparent 82%);
+      transition: opacity 0.4s ease;
+    }
+    [data-theme="light"] .bg-leclerc-wrap {
+      opacity: 0.22;
+      filter: saturate(0.95);
+    }
+    .bg-leclerc-wrap img {
+      height: 100%;
+      width: auto;
+      display: block;
+      object-fit: cover;
+      filter: contrast(1.08) saturate(1.1);
+    }
+
+    /* Subtle Wind-Tunnel Scanlines */
+    .backdrop-hud-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+      background-size: 80px 80px;
+    }
+
+    /* Bring all interactive UI above backdrop */
+    .tricolore-bar, header, main, footer { position: relative; z-index: 2; }
+
+    /* Italian Tricolore Top Bar */
+    .tricolore-bar {
+      height: 4px;
+      width: 100%;
+      background: linear-gradient(90deg, #009246 0%, #009246 33.3%, #ffffff 33.3%, #ffffff 66.6%, #ce2b37 66.6%, #ce2b37 100%);
+    }
+
+    /* Header */
+    header {
+      background: rgba(12, 14, 20, 0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 2px solid var(--rosso);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 8px 30px rgba(225, 6, 0, 0.16);
+    }
+    [data-theme="light"] header {
+      background: rgba(255, 255, 255, 0.88);
+    }
+
+    .header-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 11px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .brand { display: flex; align-items: center; gap: 14px; }
+
+    .scuderia-shield {
+      width: 44px;
+      height: 52px;
+      background: #ffd100;
+      color: #111;
+      border: 2px solid #111;
+      border-radius: 6px 6px 22px 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 0 5px;
+      overflow: hidden;
+      box-shadow: 0 0 18px rgba(255, 209, 0, 0.4);
+      flex-shrink: 0;
+    }
+    .shield-top {
+      width: 100%;
+      height: 7px;
+      background: linear-gradient(90deg, #009246 33.3%, #fff 33.3%, #fff 66.6%, #ce2b37 66.6%);
+    }
+    .shield-main {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 16px;
+      line-height: 1;
+    }
+    .shield-sub {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+
+    .brand-title-wrap h1 {
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .brand-tag {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-style: italic;
+      font-size: 13px;
+      font-weight: 800;
+      background: var(--rosso);
+      color: #fff;
+      padding: 2px 8px;
+      border-radius: 3px;
+      transform: skewX(-10deg);
+      letter-spacing: 0.06em;
+    }
+    .brand-title-wrap p {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+
+    /* F1 Start Lights */
+    .start-lights {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: #0a0b0e;
+      border: 1px solid #2b303d;
+      padding: 6px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .start-lights:hover { border-color: var(--rosso); }
+    .f1-light {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #2b1111;
+      border: 1px solid #441919;
+      transition: all 0.15s;
+    }
+    .f1-light.on {
+      background: #ff1e1e;
+      box-shadow: 0 0 10px #ff1e1e, 0 0 18px rgba(255, 30, 30, 0.75);
+      border-color: #ff8080;
+    }
+    .lights-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 800;
+      color: #fff;
+      margin-left: 4px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tab-nav {
+      display: flex;
+      background: var(--surface-2);
+      padding: 4px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      gap: 4px;
+    }
+    .tab-btn {
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      padding: 7px 13px;
+      border-radius: 7px;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.18s;
+      font-family: inherit;
+    }
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active {
+      background: var(--rosso);
+      color: #fff;
+      box-shadow: 0 0 16px var(--rosso-glow);
+    }
+
+    .theme-btn {
+      border: 1px solid var(--border-strong);
+      background: var(--surface-2);
+      color: var(--text);
+      padding: 7px 11px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .theme-btn:hover { border-color: var(--giallo); color: var(--giallo); }
+
+    /* Main */
+    main {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 18px 24px 48px;
+    }
+
+    /* Telemetry KPI Strip */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .kpi-card {
+      background: var(--surface);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--border-strong);
+      border-radius: 12px;
+      padding: 13px 16px;
+      box-shadow: var(--shadow);
+    }
+    .kpi-card.rosso { border-top-color: var(--rosso); }
+    .kpi-card.giallo { border-top-color: var(--giallo); }
+    .kpi-card.purple { border-top-color: var(--purple-sector); }
+    .kpi-card.green { border-top-color: var(--pit-green); }
+    .kpi-card.cyan { border-top-color: var(--pit-cyan); }
+
+    .kpi-label {
+      font-family: 'Barlow Condensed', 'Noto Sans KR', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+    .kpi-value { font-size: 20px; font-weight: 900; letter-spacing: -0.02em; }
+    .kpi-sub { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
+
+    /* Workspace */
+    .view-section { display: none; }
+    .view-section.active { display: block; }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: 1fr 365px;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .card {
+      background: var(--surface);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+    .card-header {
+      padding: 13px 18px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface-2);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .card-title {
+      font-size: 15px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sector-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      background: var(--rosso);
+      box-shadow: 0 0 8px var(--rosso);
+    }
+
+    .pill-group { display: flex; flex-wrap: wrap; gap: 6px; }
+    .filter-pill {
+      border: 1px solid var(--border-strong);
+      background: var(--surface-2);
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 11px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+    }
+    .filter-pill:hover { border-color: var(--text); color: var(--text); }
+    .filter-pill.active {
+      background: var(--rosso);
+      border-color: var(--rosso);
+      color: #fff;
+      box-shadow: 0 0 12px var(--rosso-glow);
+    }
+    .filter-pill.purple.active {
+      background: var(--purple-sector);
+      border-color: var(--purple-sector);
+      box-shadow: 0 0 12px rgba(217, 70, 239, 0.5);
+    }
+
+    /* Stage */
+    .stage-wrap {
+      position: relative;
+      width: 100%;
+      height: 620px;
+      background: radial-gradient(circle at center, rgba(22, 26, 36, 0.48) 0%, rgba(8, 10, 14, 0.72) 100%);
+      overflow: hidden;
+    }
+    [data-theme="light"] .stage-wrap {
+      background: radial-gradient(circle at center, rgba(255, 255, 255, 0.55) 0%, rgba(235, 232, 224, 0.75) 100%);
+    }
+
+    /* Subtle centered car inside Network stage */
+    .stage-car-ghost {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      opacity: 0.16;
+      mix-blend-mode: screen;
+    }
+    [data-theme="light"] .stage-car-ghost {
+      mix-blend-mode: multiply;
+      opacity: 0.08;
+    }
+    .stage-car-ghost img {
+      width: 72%;
+      max-width: 620px;
+      transform: rotate(-8deg);
+      -webkit-mask-image: radial-gradient(ellipse at center, #000 40%, transparent 85%);
+      mask-image: radial-gradient(ellipse at center, #000 40%, transparent 85%);
+    }
+
+    svg.viz-svg {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      display: block;
+      user-select: none;
+    }
+
+    .stage-legend {
+      position: absolute;
+      z-index: 3;
+      bottom: 14px;
+      left: 14px;
+      background: rgba(12, 15, 22, 0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border-strong);
+      border-left: 3px solid var(--rosso);
+      border-radius: 8px;
+      padding: 9px 14px;
+      font-size: 11.5px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      max-width: calc(100% - 28px);
+    }
+    [data-theme="light"] .stage-legend {
+      background: rgba(255, 255, 255, 0.9);
+    }
+    .legend-item { display: flex; align-items: center; gap: 6px; color: var(--text-muted); font-weight: 600; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+
+    .stage-tip {
+      position: absolute;
+      z-index: 3;
+      top: 12px;
+      right: 12px;
+      background: rgba(12, 15, 22, 0.82);
+      border: 1px solid var(--border-strong);
+      padding: 5px 11px;
+      border-radius: 6px;
+      font-size: 11px;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+    [data-theme="light"] .stage-tip { background: rgba(255,255,255,0.88); }
+
+    /* Inspector Dossier */
+    .inspector {
+      position: sticky;
+      top: 86px;
+      border-top: 3px solid var(--rosso);
+    }
+    .inspector-body { padding: 18px; }
+
+    .driver-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .driver-left { display: flex; align-items: center; gap: 12px; }
+
+    .car-number-box {
+      width: 56px;
+      height: 56px;
+      border-radius: 10px;
+      background: var(--rosso);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transform: skewX(-6deg);
+      box-shadow: 0 0 20px var(--rosso-glow);
+      flex-shrink: 0;
+      border: 2px solid rgba(255,255,255,0.22);
+    }
+    .car-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 24px;
+      font-weight: 800;
+      font-style: italic;
+      line-height: 1;
+    }
+    .car-code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+    .profile-name { font-size: 21px; font-weight: 900; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .gender-badge {
+      font-size: 11px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: var(--surface-2);
+      border: 1px solid var(--border-strong);
+      color: var(--text);
+    }
+    .gender-badge.special {
+      background: var(--giallo-soft);
+      border-color: var(--giallo);
+      color: var(--giallo);
+    }
+    [data-theme="light"] .gender-badge.special { color: #9a6d00; }
+
+    .telemetry-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .tele-cell {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 10px;
+    }
+    .tele-k { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted); font-weight: 700; }
+    .tele-v { font-size: 13px; font-weight: 700; margin-top: 2px; }
+
+    .info-block { margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px dashed var(--border); }
+    .info-block:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .info-label {
+      font-family: 'JetBrains Mono', 'Noto Sans KR', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .info-val { font-size: 14px; font-weight: 600; word-break: keep-all; }
+
+    .quote-box {
+      background: var(--rosso-soft);
+      border-left: 3px solid var(--rosso);
+      padding: 9px 12px;
+      border-radius: 0 8px 8px 0;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      margin-top: 8px;
+    }
+
+    .tag-list { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 9px;
+      border-radius: 5px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .tire-ring { width: 8px; height: 8px; border-radius: 50%; border: 2px solid var(--rosso); display: inline-block; }
+
+    .link-btns { display: grid; grid-template-columns: 1fr; gap: 7px; margin-top: 6px; }
+    .ext-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 9px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border-strong);
+      background: var(--surface-2);
+      color: var(--text);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+      transition: all 0.15s;
+    }
+    .ext-link:hover { border-color: var(--rosso); background: var(--rosso-soft); transform: translateX(3px); }
+    .ext-link.disabled { opacity: 0.4; pointer-events: none; }
+
+    .conn-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 9px;
+      border-radius: 6px;
+      border: 1px solid var(--border-strong);
+      background: var(--surface-2);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      color: var(--text);
+      font-family: inherit;
+    }
+    .conn-chip:hover { border-color: var(--giallo); color: var(--giallo); }
+    .conn-chip.purple { border-color: var(--purple-sector); background: var(--purple-soft); }
+
+    /* Analytics & Roster */
+    .analytics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 20px; }
+    .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 13px; }
+    .bar-label { width: 112px; flex-shrink: 0; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .bar-track { flex: 1; height: 10px; background: var(--surface-2); border-radius: 3px; overflow: hidden; border: 1px solid var(--border); }
+    .bar-fill { height: 100%; border-radius: 2px; transition: width 0.5s ease; }
+    .bar-count { width: 36px; text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 12px; color: var(--text-muted); }
+
+    .directory-controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .search-input {
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border-strong);
+      background: var(--surface);
+      backdrop-filter: blur(10px);
+      color: var(--text);
+      font-size: 13px;
+      width: 290px;
+      max-width: 100%;
+      font-family: inherit;
+    }
+    .search-input:focus { outline: none; border-color: var(--rosso); }
+
+    .roster-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+    .student-card {
+      background: var(--surface);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--rosso);
+      border-radius: 12px;
+      padding: 15px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .student-card:hover { border-color: var(--giallo); transform: translateY(-3px); box-shadow: 0 12px 28px rgba(225, 6, 0, 0.18); }
+    .student-card.selected { border-color: var(--giallo); box-shadow: 0 0 0 2px var(--giallo-soft); }
+
+    /* Photo Loader Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(5, 6, 9, 0.78);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      width: 100%;
+      max-width: 480px;
+      background: var(--surface-solid);
+      border: 1px solid var(--border-strong);
+      border-top: 3px solid var(--rosso);
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+    .upload-slot {
+      border: 1.5px dashed var(--border-strong);
+      border-radius: 10px;
+      padding: 14px;
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: var(--surface-2);
+    }
+    .upload-slot input[type="file"] { font-size: 12px; max-width: 195px; color: var(--text-muted); }
+
+    @keyframes pulseRing {
+      0% { transform: scale(1); opacity: 0.85; }
+      100% { transform: scale(2.1); opacity: 0; }
+    }
+    .pulse-circle { transform-box: fill-box; transform-origin: center; animation: pulseRing 1.8s infinite ease-out; }
+
+    footer {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 24px 36px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    footer a { color: var(--giallo); text-decoration: none; font-weight: 700; }
+    [data-theme="light"] footer a { color: var(--rosso); }
+
+    @media (max-width: 1100px) {
+      .workspace { grid-template-columns: 1fr; }
+      .inspector { position: static; }
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+      .analytics-grid { grid-template-columns: 1fr; }
+      .bg-leclerc-wrap { opacity: 0.28; height: 55vh; }
+    }
+    @media (max-width: 640px) {
+      .kpi-grid { grid-template-columns: 1fr; }
+      .stage-wrap { height: 480px; }
+      .start-lights { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Sensory Scuderia Ferrari Backdrop -->
+  <div class="scuderia-backdrop" aria-hidden="true">
+    <div class="backdrop-glow"></div>
+    <div class="backdrop-hud-grid"></div>
+    <div class="backdrop-watermark">16</div>
+    <div class="backdrop-subword">FORZA FERRARI</div>
+
+    <!-- Top-down #16 Ferrari F1 Car -->
+    <div class="bg-car-wrap" id="bgCarWrap">
+      <img id="bgCarImg" src="./ferrari-car.jpg" alt="" onerror="handleImgFallback('car')" />
+    </div>
+
+    <!-- Charles Leclerc Portrait -->
+    <div class="bg-leclerc-wrap" id="bgLeclercWrap">
+      <img id="bgLeclercImg" src="./leclerc.jpg" alt="" onerror="handleImgFallback('leclerc')" />
+    </div>
+  </div>
+
+  <div class="tricolore-bar"></div>
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <div class="scuderia-shield" title="Scuderia KDU Design 3">
+          <div class="shield-top"></div>
+          <div class="shield-main">KDU</div>
+          <div class="shield-sub">DES·03</div>
+        </div>
+        <div class="brand-title-wrap">
+          <h1>
+            경동대 디자인학과 3학년 인물지도
+            <span class="brand-tag">SCUDERIA #16</span>
+          </h1>
+          <p class="mono" style="font-size: 11px;">MARANELLO WIND-TUNNEL HUD · 15 DRIVERS · CHARLES LECLERC EDITION</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <div class="start-lights" id="startLights" title="클릭하여 F1 스타트 시퀀스 재생">
+          <span class="f1-light on"></span>
+          <span class="f1-light on"></span>
+          <span class="f1-light on"></span>
+          <span class="f1-light on"></span>
+          <span class="f1-light on"></span>
+          <span class="lights-label" id="lightsLabel">LIGHTS OUT</span>
+        </div>
+
+        <nav class="tab-nav" role="tablist">
+          <button class="tab-btn active" data-tab="network">🏎️ 서킷 관계망</button>
+          <button class="tab-btn" data-tab="map">📡 GPS 거점 지도</button>
+          <button class="tab-btn" data-tab="analytics">🏁 타이밍 타워 & 명부</button>
+        </nav>
+
+        <button class="theme-btn" id="photoModalBtn" title="배경 이미지 선택">🖼️ 배경 사진</button>
+        <button class="theme-btn" id="themeToggle" title="테마 전환">☀️ 몬자 화이트</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="kpi-grid">
+      <div class="kpi-card rosso">
+        <div class="kpi-label">STARTING GRID · 총 인원</div>
+        <div class="kpi-value">15 DRIVERS</div>
+        <div class="kpi-sub">제출 페이지 14개 · GitHub 15개</div>
+      </div>
+      <div class="kpi-card giallo">
+        <div class="kpi-label">POLE HUB · 최다 밀집</div>
+        <div class="kpi-value" style="color: var(--giallo);">의정부시 4명</div>
+        <div class="kpi-sub">민락 · 의정부 · 금오 · 신곡2동</div>
+      </div>
+      <div class="kpi-card cyan">
+        <div class="kpi-label">DOMINANT SPEC · 최다 취미</div>
+        <div class="kpi-value">음악·기타 8명</div>
+        <div class="kpi-sub">일렉 · 통기타 · 네줄 · 우쿨렐레</div>
+      </div>
+      <div class="kpi-card purple">
+        <div class="kpi-label">PURPLE SECTOR · 직접 지목</div>
+        <div class="kpi-value" style="color: var(--purple-sector);">2 PAIRS</div>
+        <div class="kpi-sub">박준영→김보라 · 민제희→정유림</div>
+      </div>
+      <div class="kpi-card green">
+        <div class="kpi-label">LONGEST STINT · 최장 거리</div>
+        <div class="kpi-value">거제시 장평동</div>
+        <div class="kpi-sub">박정빈 (양주 피트 기준 ~330km)</div>
+      </div>
+    </section>
+
+    <div class="workspace" id="mainWorkspace">
+      <div>
+        <!-- TAB 1: Network -->
+        <section class="view-section active" id="tab-network">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title"><span class="sector-dot"></span>🏎️ 드라이버 텔레메트리 관계망</div>
+              <div class="pill-group" id="networkFilters">
+                <button class="filter-pill active" data-edge="all">ALL TELEMETRY</button>
+                <button class="filter-pill purple" data-edge="mention">🟣 퍼플 섹터 (직접 지목)</button>
+                <button class="filter-pill" data-edge="hobby">🎸 취미 공유</button>
+                <button class="filter-pill" data-edge="region">📍 같은 생활권</button>
+                <button class="filter-pill" data-edge="treasure">💎 가치관 공유</button>
+              </div>
+            </div>
+            <div class="stage-wrap">
+              <div class="stage-car-ghost" id="stageCarGhost">
+                <img id="stageCarImg" src="./ferrari-car.jpg" alt="" onerror="this.style.display='none'" />
+              </div>
+              <svg id="networkSvg" class="viz-svg"></svg>
+              <div class="stage-tip mono">DRAG OR CLICK CAR NODE</div>
+              <div class="stage-legend">
+                <div class="legend-item"><span class="legend-dot" style="background: var(--purple-sector);"></span>퍼플 섹터 (직접 지목)</div>
+                <div class="legend-item"><span class="legend-dot" style="background: var(--rosso);"></span>취미/팬덤 공유</div>
+                <div class="legend-item"><span class="legend-dot" style="background: var(--pit-green);"></span>같은 생활권</div>
+                <div class="legend-item"><span class="legend-dot" style="background: var(--giallo);"></span>가치관(나/가족) 공유</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 2: Map -->
+        <section class="view-section" id="tab-map">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title"><span class="sector-dot"></span>📡 F1 GPS 거점 트래커 (동 단위)</div>
+              <div class="pill-group" id="mapModeFilters">
+                <button class="filter-pill active" data-mapmode="metro">🔍 수도권·경기북부 서킷</button>
+                <button class="filter-pill" data-mapmode="korea">🇰🇷 전국 트랙뷰 (거제시 포함)</button>
+              </div>
+            </div>
+            <div class="stage-wrap">
+              <svg id="mapSvg" class="viz-svg"></svg>
+              <div class="stage-tip mono">CLICK GPS BEACON FOR TELEMETRY</div>
+              <div class="stage-legend">
+                <div class="legend-item"><span class="legend-dot" style="background: var(--rosso);"></span>경동대 피트 (양주)</div>
+                <div class="legend-item"><span class="legend-dot" style="background: var(--giallo);"></span>의정부 그리드 (4)</div>
+                <div class="legend-item"><span class="legend-dot" style="background: var(--pit-green);"></span>서울 그리드 (4)</div>
+                <div class="legend-item"><span class="legend-dot" style="background: var(--pit-cyan);"></span>경기 동·북부 (5)</div>
+                <div class="legend-item"><span class="legend-dot" style="background: var(--purple-sector);"></span>강원 · 경남 (2)</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Right Driver Telemetry Dossier -->
+      <aside class="card inspector" id="inspectorCard">
+        <div class="card-header">
+          <div class="card-title">🏁 DRIVER TELEMETRY</div>
+          <span class="mono" style="font-size: 11px; color: var(--giallo); font-weight: 800;" id="inspectorIndex">CAR #09</span>
+        </div>
+        <div class="inspector-body" id="inspectorBody"></div>
+      </aside>
+    </div>
+
+    <!-- TAB 3: Timing Tower Analytics & Roster -->
+    <section class="view-section" id="tab-analytics">
+      <div class="analytics-grid">
+        <div class="card">
+          <div class="card-header"><div class="card-title">📍 SECTOR · 거주 권역 분포</div></div>
+          <div class="inspector-body" id="regionChart"></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">🏎️ SPEC · 취미 클러스터</div></div>
+          <div class="inspector-body" id="hobbyChart"></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">🏆 VALUE · 아끼는 가치 분류</div></div>
+          <div class="inspector-body" id="treasureChart"></div>
+        </div>
+      </div>
+
+      <div class="directory-controls">
+        <input type="text" class="search-input" id="searchInput" placeholder="드라이버 이름, 지역, 취미, 밈 검색..." />
+        <div class="pill-group" id="rosterFilters">
+          <button class="filter-pill active" data-filter="all">ALL GRID (15)</button>
+          <button class="filter-pill" data-filter="의정부">의정부 (4)</button>
+          <button class="filter-pill" data-filter="서울">서울 (4)</button>
+          <button class="filter-pill" data-filter="경기기타">경기 동·북부 (5)</button>
+          <button class="filter-pill" data-filter="음악">🎸 음악·기타</button>
+          <button class="filter-pill" data-filter="개성">✨ 스페셜 리버리(밈)</button>
+        </div>
+      </div>
+
+      <div class="roster-grid" id="rosterGrid"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div><strong style="color:var(--rosso);">SCUDERIA KDU DESIGN 3</strong> · 경동대학교 디자인학과 3학년 인물지도 F1 텔레메트리 시각화</div>
+    <div>시트 하단 참고 링크: <a href="https://gypog5122-cell.github.io/20260911-2/" target="_blank" rel="noopener">gypog5122-cell.github.io/20260911-2/ ↗</a></div>
+  </footer>
+
+  <!-- Custom Backdrop Photo Loader Modal -->
+  <div class="modal-overlay" id="photoModal">
+    <div class="modal-box">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <h3 style="font-size:16px; font-weight:800;">🖼️ 페라리 배경 사진 연결</h3>
+        <button class="filter-pill" id="closePhotoModal">닫기 ✕</button>
+      </div>
+      <p style="font-size:12.5px; color:var(--text-muted); line-height:1.55;">
+        <code>index.html</code>과 같은 폴더에 <strong>ferrari-car.jpg</strong>, <strong>leclerc.jpg</strong>로 저장하면 자동 적용됩니다. 또는 아래에서 사진을 직접 선택하면 브라우저에 저장되어 바로 감각적인 배경으로 합성됩니다.
+      </p>
+
+      <div class="upload-slot">
+        <div>
+          <div style="font-size:13px; font-weight:700;">🏎️ 1. 페라리 머신 탑뷰</div>
+          <div style="font-size:11px; color:var(--text-muted);">좌측 카본 & 중앙 별자리 배경</div>
+        </div>
+        <input type="file" accept="image/*" id="uploadCar" />
+      </div>
+
+      <div class="upload-slot">
+        <div>
+          <div style="font-size:13px; font-weight:700;">👤 2. 샤를 르클레르 화보</div>
+          <div style="font-size:11px; color:var(--text-muted);">우측 에디토리얼 페더 배경</div>
+        </div>
+        <input type="file" accept="image/*" id="uploadLeclerc" />
+      </div>
+
+      <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:16px;">
+        <button class="filter-pill" id="resetPhotos">저장된 사진 초기화</button>
+        <button class="filter-pill active" id="donePhotoModal">적용 완료</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ==========================================
+    // 0. BACKGROUND PHOTO LOADER & PERSISTENCE
+    // ==========================================
+    function applySavedPhotos() {
+      const savedCar = localStorage.getItem("kdu_f1_car_img");
+      const savedLec = localStorage.getItem("kdu_f1_leclerc_img");
+      if (savedCar) {
+        document.getElementById("bgCarImg").src = savedCar;
+        document.getElementById("stageCarImg").src = savedCar;
+        document.getElementById("bgCarWrap").style.display = "block";
+        document.getElementById("stageCarImg").style.display = "block";
+      }
+      if (savedLec) {
+        document.getElementById("bgLeclercImg").src = savedLec;
+        document.getElementById("bgLeclercWrap").style.display = "block";
+      }
+    }
+
+    function handleImgFallback(which) {
+      if (which === "car" && !localStorage.getItem("kdu_f1_car_img")) {
+        document.getElementById("bgCarWrap").style.display = "none";
+      }
+      if (which === "leclerc" && !localStorage.getItem("kdu_f1_leclerc_img")) {
+        document.getElementById("bgLeclercWrap").style.display = "none";
+      }
+    }
+
+    function compressAndSaveImage(file, storageKey, onDone) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          const maxDim = 1400;
+          let w = img.width, h = img.height;
+          if (w > maxDim || h > maxDim) {
+            const ratio = Math.min(maxDim / w, maxDim / h);
+            w = Math.round(w * ratio);
+            h = Math.round(h * ratio);
+          }
+          const canvas = document.createElement("canvas");
+          canvas.width = w; canvas.height = h;
+          canvas.getContext("2d").drawImage(img, 0, 0, w, h);
+          const dataUrl = canvas.toDataURL("image/jpeg", 0.85);
+          try { localStorage.setItem(storageKey, dataUrl); } catch (_) {}
+          onDone(dataUrl);
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    const photoModal = document.getElementById("photoModal");
+    document.getElementById("photoModalBtn").addEventListener("click", () => photoModal.classList.add("open"));
+    document.getElementById("closePhotoModal").addEventListener("click", () => photoModal.classList.remove("open"));
+    document.getElementById("donePhotoModal").addEventListener("click", () => photoModal.classList.remove("open"));
+    photoModal.addEventListener("click", (e) => { if (e.target === photoModal) photoModal.classList.remove("open"); });
+
+    document.getElementById("uploadCar").addEventListener("change", (e) => {
+      if (e.target.files[0]) {
+        compressAndSaveImage(e.target.files[0], "kdu_f1_car_img", () => applySavedPhotos());
+      }
+    });
+    document.getElementById("uploadLeclerc").addEventListener("change", (e) => {
+      if (e.target.files[0]) {
+        compressAndSaveImage(e.target.files[0], "kdu_f1_leclerc_img", () => applySavedPhotos());
+      }
+    });
+    document.getElementById("resetPhotos").addEventListener("click", () => {
+      localStorage.removeItem("kdu_f1_car_img");
+      localStorage.removeItem("kdu_f1_leclerc_img");
+      location.reload();
+    });
+
+    applySavedPhotos();
+
+    // ==========================================
+    // 1. DRIVER ROSTER DATA (15 Students)
+    // ==========================================
+    const CAMPUS = { name: "경동대 피트(양주)", lat: 37.826, lng: 127.074 };
+
+    const STUDENTS = [
+      {
+        id: "park_js", num: "01", code: "PJS",
+        name: "박종석",
+        github: "https://github.com/John02-design",
+        pages: "https://john02-design.github.io/1234/",
+        instaLabel: "I_am_jongseok",
+        instaUrl: "https://www.instagram.com/I_am_jongseok/",
+        hobbies: ["일렉기타", "영화감상"],
+        hobbyTags: ["음악/악기", "영화/영상"],
+        address: "경기도 의정부시 민락동",
+        regionGroup: "의정부",
+        lat: 37.745, lng: 127.095,
+        treasure: "나",
+        treasureType: "자기애",
+        gender: "미입력",
+        specialGender: false,
+        color: "#e10600",
+        mentions: []
+      },
+      {
+        id: "park_jy", num: "02", code: "PJY",
+        name: "박준영",
+        github: "https://github.com/alex60796-bot",
+        pages: "https://alex60796-bot.github.io/dkssudgktpdy/",
+        instaLabel: "jxn.y0xn9",
+        instaUrl: "https://www.instagram.com/jxn.y0xn9/",
+        hobbies: ["피파"],
+        hobbyTags: ["게임/애니"],
+        address: "경기도 의정부시 의정부동",
+        regionGroup: "의정부",
+        lat: 37.738, lng: 127.046,
+        treasure: "김보라",
+        treasureType: "동기지목",
+        gender: "공룡",
+        specialGender: true,
+        color: "#ffd100",
+        mentions: ["kim_br"]
+      },
+      {
+        id: "kang_ms", num: "03", code: "KMS",
+        name: "강민서",
+        github: "https://github.com/rlverms",
+        pages: "https://rlverms.github.io/rlverms/",
+        instaLabel: "rlverms",
+        instaUrl: "https://www.instagram.com/rlverms/",
+        hobbies: ["쿠리만쥬 인형 구매", "영화 시청", "음악 감상"],
+        hobbyTags: ["팬덤/수집", "영화/영상", "음악/감상"],
+        address: "서울특별시 노원구 상계동",
+        regionGroup: "서울",
+        lat: 37.660, lng: 127.065,
+        treasure: "엄마",
+        treasureType: "가족애",
+        gender: "여자",
+        specialGender: false,
+        color: "#00e676",
+        mentions: []
+      },
+      {
+        id: "park_jb", num: "04", code: "PJB",
+        name: "박정빈",
+        github: "https://github.com/ImSAKUYAmyfriendisRYO",
+        pages: "https://imsakuyamyfriendisryo.github.io/-/",
+        instaLabel: "@upfstpu.2",
+        instaUrl: "https://www.instagram.com/upfstpu.2/",
+        hobbies: ["노래듣기"],
+        hobbyTags: ["음악/감상", "팬덤/수집"],
+        address: "경상남도 거제시 장평동",
+        regionGroup: "경남",
+        lat: 34.892, lng: 128.613,
+        treasure: "나 ^.....^",
+        treasureType: "자기애",
+        gender: "여자",
+        specialGender: false,
+        color: "#d946ef",
+        note: "GitHub ID(ImSAKUYAmyfriendisRYO)로 NCT WISH 팬덤 공통점 포착",
+        mentions: []
+      },
+      {
+        id: "kim_nr", num: "05", code: "KNR",
+        name: "김나림",
+        github: "https://github.com/nalimgim947",
+        pages: "",
+        instaLabel: "@thisisimrimthis",
+        instaUrl: "https://www.instagram.com/thisisimrimthis/",
+        hobbies: ["그림", "음악", "운동", "애니"],
+        hobbyTags: ["창작/독서", "음악/감상", "운동/힐링", "게임/애니"],
+        address: "경기도 동두천시",
+        regionGroup: "경기기타",
+        lat: 37.903, lng: 127.060,
+        treasure: "나라고 나",
+        treasureType: "자기애",
+        gender: "덩엉이",
+        specialGender: true,
+        color: "#00d2ff",
+        mentions: []
+      },
+      {
+        id: "kim_br", num: "06", code: "KBR",
+        name: "김보라",
+        github: "https://github.com/KIMBORA050411",
+        pages: "https://kimbora050411.github.io/050411/",
+        instaLabel: "@b0.ra.4",
+        instaUrl: "https://www.instagram.com/b0.ra.4/",
+        hobbies: ["공포 보기"],
+        hobbyTags: ["영화/영상"],
+        address: "경기도 의정부시 금오동",
+        regionGroup: "의정부",
+        lat: 37.752, lng: 127.074,
+        treasure: "김복돌",
+        treasureType: "반려/건강",
+        gender: "여자",
+        specialGender: false,
+        color: "#ffd100",
+        mentions: []
+      },
+      {
+        id: "kim_sg", num: "07", code: "KSG",
+        name: "김승기",
+        github: "https://github.com/Seung7l",
+        pages: "https://seung7l.github.io/DoSiMoonWhaSulGye/",
+        instaLabel: "@_seung7l",
+        instaUrl: "https://www.instagram.com/_seung7l/",
+        hobbies: ["네줄기타"],
+        hobbyTags: ["음악/악기"],
+        address: "경기도 구리시 인창동",
+        regionGroup: "경기기타",
+        lat: 37.603, lng: 127.143,
+        treasure: "바로바로 나!",
+        treasureType: "자기애",
+        gender: "남자",
+        specialGender: false,
+        color: "#00d2ff",
+        mentions: []
+      },
+      {
+        id: "moon_mh", num: "08", code: "MMH",
+        name: "문민희",
+        github: "https://github.com/massiag41-art",
+        pages: "https://massiag41-art.github.io/1233/",
+        instaLabel: "@mini3061",
+        instaUrl: "https://www.instagram.com/mini3061/",
+        hobbies: ["게임"],
+        hobbyTags: ["게임/애니"],
+        address: "경기도 남양주시",
+        regionGroup: "경기기타",
+        lat: 37.636, lng: 127.216,
+        treasure: "가족, 망고, 여름",
+        treasureType: "가족애",
+        gender: "여자",
+        specialGender: false,
+        color: "#00d2ff",
+        mentions: []
+      },
+      {
+        id: "min_jh", num: "09", code: "MJH",
+        name: "민제희",
+        github: "https://github.com/alfmekfn5",
+        pages: "https://alfmekfn5.github.io/555/",
+        instaLabel: "@mirdar.u_",
+        instaUrl: "https://www.instagram.com/mirdar.u_/",
+        hobbies: ["게임", "운동", "기깔나게 자기"],
+        hobbyTags: ["게임/애니", "운동/힐링"],
+        address: "강원도 춘천시",
+        regionGroup: "강원",
+        lat: 37.881, lng: 127.730,
+        treasure: "가족들, 이연우 <<<<<<<<<<<<<< 정유림",
+        treasureType: "동기지목",
+        gender: "경동대제국 1황녀",
+        specialGender: true,
+        note: "어머니 저는 2층에서 뛰어내려서 등교하겠습니다 -> 상여자",
+        color: "#e10600",
+        mentions: ["jung_yr"]
+      },
+      {
+        id: "yoon_sa", num: "10", code: "YSA",
+        name: "윤수아",
+        github: "https://github.com/tndk0512-ux",
+        pages: "https://tndk0512-ux.github.io/index/",
+        instaLabel: "tnd_0_5",
+        instaUrl: "https://www.instagram.com/tnd_0_5/",
+        hobbies: ["기타", "애니", "음악듣기"],
+        hobbyTags: ["음악/악기", "게임/애니", "음악/감상"],
+        address: "서울특별시 송파구 마천동",
+        regionGroup: "서울",
+        lat: 37.495, lng: 127.152,
+        treasure: "동생",
+        treasureType: "가족애",
+        gender: "여자",
+        specialGender: false,
+        color: "#00e676",
+        mentions: []
+      },
+      {
+        id: "lee_jm", num: "11", code: "LJM",
+        name: "이지민",
+        github: "https://github.com/leejimin0",
+        pages: "https://leejimin0.github.io/ezym/",
+        instaLabel: "@tonmozza",
+        instaUrl: "https://www.instagram.com/tonmozza/",
+        hobbies: ["독서"],
+        hobbyTags: ["창작/독서"],
+        address: "경기도 하남시 망월동",
+        regionGroup: "경기기타",
+        lat: 37.567, lng: 127.190,
+        treasure: "가족",
+        treasureType: "가족애",
+        gender: "여자",
+        specialGender: false,
+        color: "#00d2ff",
+        mentions: []
+      },
+      {
+        id: "jung_yr", num: "12", code: "JYR",
+        name: "정유림",
+        github: "https://github.com/yourrime0502-afk",
+        pages: "https://yourrime0502-afk.github.io/kdu1/",
+        instaLabel: "@nollimmm",
+        instaUrl: "https://www.instagram.com/nollimmm?mdxt=MWNnNHBwZm5kNWI4NQ==",
+        hobbies: ["콘서트 관람"],
+        hobbyTags: ["음악/감상", "팬덤/수집"],
+        address: "서울특별시 동대문구 답십리2동",
+        regionGroup: "서울",
+        lat: 37.571, lng: 127.061,
+        treasure: "우리 엄마, 이성열 미모",
+        treasureType: "가족애",
+        gender: "여자",
+        specialGender: false,
+        color: "#d946ef",
+        mentions: []
+      },
+      {
+        id: "choi_yy", num: "13", code: "CYY",
+        name: "최윤영",
+        github: "https://github.com/usagi030dd",
+        pages: "https://usagi030dd.github.io/samples/",
+        instaLabel: "@usagi030dd",
+        instaUrl: "https://www.instagram.com/usagi030dd/",
+        hobbies: ["음악 감상 및 연주(통기타&일렉)"],
+        hobbyTags: ["음악/악기", "음악/감상"],
+        address: "서울특별시 도봉구 쌍문동",
+        regionGroup: "서울",
+        lat: 37.651, lng: 127.034,
+        treasure: "엄마",
+        treasureType: "가족애",
+        gender: "여자",
+        specialGender: false,
+        color: "#00e676",
+        mentions: []
+      },
+      {
+        id: "choi_yj", num: "14", code: "CYJ",
+        name: "최윤지",
+        github: "https://github.com/choiyg1105-cloud",
+        pages: "https://choiyg1105-cloud.github.io/save/",
+        instaLabel: "yum._.crochet",
+        instaUrl: "https://www.instagram.com/yum._.crochet/",
+        hobbies: ["우쿨렐레", "뜨개질"],
+        hobbyTags: ["음악/악기", "창작/독서"],
+        address: "경기도 포천시",
+        regionGroup: "경기기타",
+        lat: 37.895, lng: 127.200,
+        treasure: "건강",
+        treasureType: "반려/건강",
+        gender: "여자",
+        specialGender: false,
+        color: "#00d2ff",
+        mentions: []
+      },
+      {
+        id: "shin_dh", num: "15", code: "SDH",
+        name: "신단하",
+        github: "https://github.com/danhaaaa",
+        pages: "https://danhaaaa.github.io/sakuya/",
+        instaLabel: "@danha_naa",
+        instaUrl: "https://www.instagram.com/danha_naa/",
+        hobbies: ["위시 사랑하기"],
+        hobbyTags: ["팬덤/수집"],
+        address: "경기도 의정부시 신곡2동",
+        regionGroup: "의정부",
+        lat: 37.739, lng: 127.068,
+        treasure: "동생",
+        treasureType: "가족애",
+        gender: "여자",
+        specialGender: false,
+        color: "#e10600",
+        note: "Pages 주소(/sakuya/) & 취미(위시 사랑하기)로 박정빈과 같은 NCT WISH 사쿠야 팬 연결",
+        mentions: []
+      }
+    ];
+
+    const byId = Object.fromEntries(STUDENTS.map(s => [s.id, s]));
+
+    // ==========================================
+    // 2. BUILD EDGES
+    // ==========================================
+    const EDGES = [];
+    function addEdge(source, target, type, label) {
+      EDGES.push({ source, target, type, label });
+    }
+
+    STUDENTS.forEach(s => {
+      s.mentions.forEach(tId => {
+        addEdge(s.id, tId, "mention", `${s.name} → ${byId[tId].name} 직접 지목`);
+      });
+    });
+
+    for (let i = 0; i < STUDENTS.length; i++) {
+      for (let j = i + 1; j < STUDENTS.length; j++) {
+        const a = STUDENTS[i];
+        const b = STUDENTS[j];
+        const sharedHobbies = a.hobbyTags.filter(t => b.hobbyTags.includes(t));
+        if (sharedHobbies.length > 0) addEdge(a.id, b.id, "hobby", `공통 취미: ${sharedHobbies.join(", ")}`);
+        if (a.regionGroup === b.regionGroup && (a.regionGroup === "의정부" || a.regionGroup === "서울")) {
+          addEdge(a.id, b.id, "region", `같은 생활권: ${a.regionGroup}`);
+        }
+        if (a.treasureType === b.treasureType && (a.treasureType === "자기애" || a.treasureType === "가족애")) {
+          addEdge(a.id, b.id, "treasure", `가치관: ${a.treasureType}`);
+        }
+      }
+    }
+
+    // ==========================================
+    // 3. F1 START LIGHTS & THEME
+    // ==========================================
+    let lightTimers = [];
+    function triggerStartSequence() {
+      lightTimers.forEach(clearTimeout);
+      lightTimers = [];
+      const lights = document.querySelectorAll("#startLights .f1-light");
+      const label = document.getElementById("lightsLabel");
+      lights.forEach(l => l.classList.remove("on"));
+      label.textContent = "STANDBY";
+
+      lights.forEach((l, idx) => {
+        lightTimers.push(setTimeout(() => {
+          l.classList.add("on");
+          if (idx === 4) label.textContent = "HOLD...";
+        }, (idx + 1) * 320));
+      });
+
+      lightTimers.push(setTimeout(() => {
+        lights.forEach(l => l.classList.remove("on"));
+        label.textContent = "AND AWAY WE GO!";
+        label.style.color = "#00e676";
+      }, 2200));
+
+      lightTimers.push(setTimeout(() => {
+        lights.forEach(l => l.classList.add("on"));
+        label.textContent = "LIGHTS OUT";
+        label.style.color = "#fff";
+      }, 4200));
+    }
+    document.getElementById("startLights").addEventListener("click", triggerStartSequence);
+
+    let selectedId = "min_jh";
+    let currentEdgeFilter = "all";
+    let currentMapMode = "metro";
+
+    const themeBtn = document.getElementById("themeToggle");
+    themeBtn.addEventListener("click", () => {
+      const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+      document.documentElement.setAttribute("data-theme", isDark ? "light" : "dark");
+      themeBtn.textContent = isDark ? "🏎️ 마라넬로 다크" : "☀️ 몬자 화이트";
+      renderMap();
+    });
+
+    document.querySelectorAll(".tab-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        const tab = btn.dataset.tab;
+        document.querySelectorAll(".view-section").forEach(sec => sec.classList.remove("active"));
+        document.getElementById(`tab-${tab}`).classList.add("active");
+
+        const workspace = document.getElementById("mainWorkspace");
+        if (tab === "analytics") {
+          workspace.style.display = "none";
+          renderAnalytics();
+          renderRoster();
+        } else {
+          workspace.style.display = "grid";
+          if (tab === "map") renderMap();
+          if (tab === "network") updateNetworkSize();
+        }
+      });
+    });
+
+    // ==========================================
+    // 4. DRIVER TELEMETRY INSPECTOR
+    // ==========================================
+    function selectStudent(id) {
+      selectedId = id;
+      renderInspector();
+      highlightNetworkSelection();
+      renderMap();
+      renderRoster();
+    }
+
+    function renderInspector() {
+      const s = byId[selectedId];
+      const body = document.getElementById("inspectorBody");
+      const idxBadge = document.getElementById("inspectorIndex");
+      if (!s) return;
+
+      idxBadge.textContent = `CAR #${s.num} · ${s.code}`;
+
+      const connMap = new Map();
+      EDGES.forEach(e => {
+        if (e.source === s.id) {
+          if (!connMap.has(e.target)) connMap.set(e.target, []);
+          connMap.get(e.target).push(e.label);
+        } else if (e.target === s.id) {
+          if (!connMap.has(e.source)) connMap.set(e.source, []);
+          connMap.get(e.source).push(e.label);
+        }
+      });
+
+      const distKm = haversineKm(CAMPUS.lat, CAMPUS.lng, s.lat, s.lng).toFixed(1);
+      const compoundColors = ["var(--rosso)", "var(--giallo)", "var(--pit-green)", "var(--pit-cyan)"];
+
+      body.innerHTML = `
+        <div class="driver-header">
+          <div class="driver-left">
+            <div class="car-number-box" style="background:${s.specialGender ? 'linear-gradient(135deg, #e10600, #9b0000)' : 'var(--rosso)'};">
+              <div class="car-num">#${s.num}</div>
+              <div class="car-code">${s.code}</div>
+            </div>
+            <div>
+              <div class="profile-name">
+                ${s.name}
+                <span class="gender-badge ${s.specialGender ? "special" : ""}">${s.gender}</span>
+              </div>
+              <div class="mono" style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">
+                TEAM KDU DESIGN · ${s.regionGroup} SECTOR
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="telemetry-grid">
+          <div class="tele-cell">
+            <div class="tele-k">PIT DISTANCE</div>
+            <div class="tele-v mono" style="color: var(--pit-cyan);">${distKm} km</div>
+          </div>
+          <div class="tele-cell">
+            <div class="tele-k">CONNECTED CARS</div>
+            <div class="tele-v mono" style="color: var(--giallo);">${connMap.size} DRIVERS</div>
+          </div>
+        </div>
+
+        <div class="info-block">
+          <div class="info-label">📍 HOME CIRCUIT (동 단위)</div>
+          <div class="info-val">${s.address}</div>
+        </div>
+
+        <div class="info-block">
+          <div class="info-label">🛞 PIRELLI HOBBY COMPOUND</div>
+          <div class="tag-list">
+            ${s.hobbies.map((h, i) => `
+              <span class="tag">
+                <span class="tire-ring" style="border-color: ${compoundColors[i % compoundColors.length]};"></span>
+                ${h}
+              </span>
+            `).join("")}
+          </div>
+        </div>
+
+        <div class="info-block">
+          <div class="info-label">🏆 MOST TREASURED · 핵심 가치</div>
+          <div class="info-val" style="font-weight: 800; color: ${s.mentions.length ? 'var(--purple-sector)' : 'var(--text)'};">
+            ${escapeHtml(s.treasure)}
+          </div>
+          ${s.note ? `<div class="quote-box">📻 TEAM RADIO: "${escapeHtml(s.note)}"</div>` : ""}
+        </div>
+
+        <div class="info-block">
+          <div class="info-label">🔗 TELEMETRY & SOCIAL LINKS</div>
+          <div class="link-btns">
+            <a class="ext-link" href="${s.github}" target="_blank" rel="noopener">
+              <span>GitHub Telemetry</span><span>↗</span>
+            </a>
+            <a class="ext-link ${s.pages ? "" : "disabled"}" href="${s.pages || "#"}" target="_blank" rel="noopener">
+              <span>${s.pages ? "GitHub Pages (제출 페이지)" : "제출 페이지 미등록"}</span><span>${s.pages ? "↗" : "—"}</span>
+            </a>
+            <a class="ext-link" href="${s.instaUrl}" target="_blank" rel="noopener">
+              <span>Instagram (${escapeHtml(s.instaLabel)})</span><span>↗</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="info-block">
+          <div class="info-label">🤝 SLIPSTREAM LINKS (${connMap.size})</div>
+          <div class="tag-list">
+            ${Array.from(connMap.entries()).slice(0, 10).map(([otherId, reasons]) => {
+              const other = byId[otherId];
+              const isMention = reasons.some(r => r.includes("직접 지목"));
+              return `<button class="conn-chip ${isMention ? "purple" : ""}" onclick="selectStudent('${otherId}')" title="${escapeHtml(reasons.join(' / '))}">
+                ${isMention ? "🟣 " : ""}<span class="mono" style="opacity:0.7;">#${other.num}</span> ${other.name}
+              </button>`;
+            }).join("")}
+          </div>
+        </div>
+      `;
+    }
+
+    function escapeHtml(str) {
+      return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    function haversineKm(lat1, lon1, lat2, lon2) {
+      const R = 6371;
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+      const a = Math.sin(dLat / 2) ** 2 +
+        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon / 2) ** 2;
+      return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    }
+
+    // ==========================================
+    // 5. F1 TELEMETRY NETWORK GRAPH
+    // ==========================================
+    const netSvg = document.getElementById("networkSvg");
+    let netWidth = 800, netHeight = 620;
+    const nodes = STUDENTS.map((s, i) => {
+      const angle = (i / STUDENTS.length) * Math.PI * 2;
+      return {
+        ...s,
+        x: 400 + Math.cos(angle) * 200,
+        y: 310 + Math.sin(angle) * 180,
+        vx: 0,
+        vy: 0
+      };
+    });
+    const nodeById = Object.fromEntries(nodes.map(n => [n.id, n]));
+
+    let dragNode = null;
+    let dragMoved = false;
+
+    function updateNetworkSize() {
+      const rect = netSvg.getBoundingClientRect();
+      if (rect.width > 0) {
+        netWidth = rect.width;
+        netHeight = rect.height;
+      }
+    }
+
+    function initNetworkSvg() {
+      updateNetworkSize();
+      netSvg.innerHTML = "";
+
+      const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+      defs.innerHTML = `
+        <marker id="arrowPurple" viewBox="0 0 10 10" refX="28" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+          <path d="M 0 1 L 10 5 L 0 9 z" fill="var(--purple-sector)"></path>
+        </marker>
+      `;
+      netSvg.appendChild(defs);
+
+      const radarG = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      radarG.setAttribute("opacity", "0.22");
+      [110, 210, 310].forEach(r => {
+        const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        c.setAttribute("cx", netWidth / 2);
+        c.setAttribute("cy", netHeight / 2);
+        c.setAttribute("r", r);
+        c.setAttribute("fill", "none");
+        c.setAttribute("stroke", "var(--border-strong)");
+        c.setAttribute("stroke-dasharray", "5 5");
+        radarG.appendChild(c);
+      });
+      netSvg.appendChild(radarG);
+
+      const edgeLayer = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      edgeLayer.id = "edgeLayer";
+      const nodeLayer = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      nodeLayer.id = "nodeLayer";
+
+      netSvg.appendChild(edgeLayer);
+      netSvg.appendChild(nodeLayer);
+
+      EDGES.forEach((e, idx) => {
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.dataset.idx = idx;
+        line.dataset.type = e.type;
+        line.dataset.source = e.source;
+        line.dataset.target = e.target;
+
+        const colorMap = {
+          mention: "var(--purple-sector)",
+          hobby: "var(--rosso)",
+          region: "var(--pit-green)",
+          treasure: "var(--giallo)"
+        };
+        line.setAttribute("stroke", colorMap[e.type]);
+        line.setAttribute("stroke-width", e.type === "mention" ? "3" : "1.2");
+        if (e.type === "mention") {
+          line.setAttribute("stroke-dasharray", "7 4");
+          line.setAttribute("marker-end", "url(#arrowPurple)");
+        }
+        line.setAttribute("stroke-opacity", e.type === "mention" ? "1" : "0.26");
+        edgeLayer.appendChild(line);
+      });
+
+      nodes.forEach(n => {
+        const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        g.style.cursor = "grab";
+        g.dataset.id = n.id;
+
+        const ring = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        ring.setAttribute("r", "27");
+        ring.setAttribute("fill", "none");
+        ring.setAttribute("stroke", "var(--giallo)");
+        ring.setAttribute("stroke-width", "2.5");
+        ring.setAttribute("stroke-dasharray", "4 2");
+        ring.setAttribute("opacity", "0");
+        ring.classList.add("sel-ring");
+
+        const isStar = n.mentions.length > 0 || n.id === "kim_br" || n.id === "jung_yr";
+        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        circle.setAttribute("r", isStar ? "21" : "18");
+        circle.setAttribute("fill", "#11131a");
+        circle.setAttribute("stroke", n.color);
+        circle.setAttribute("stroke-width", "3");
+
+        const codeTxt = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        codeTxt.setAttribute("text-anchor", "middle");
+        codeTxt.setAttribute("dy", "0.35em");
+        codeTxt.setAttribute("fill", "#ffffff");
+        codeTxt.setAttribute("font-family", "Barlow Condensed, sans-serif");
+        codeTxt.setAttribute("font-size", "13");
+        codeTxt.setAttribute("font-weight", "800");
+        codeTxt.setAttribute("font-style", "italic");
+        codeTxt.textContent = n.num;
+
+        const labelBg = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        labelBg.setAttribute("x", "-32");
+        labelBg.setAttribute("y", "24");
+        labelBg.setAttribute("width", "64");
+        labelBg.setAttribute("height", "18");
+        labelBg.setAttribute("rx", "4");
+        labelBg.setAttribute("fill", "var(--surface-solid)");
+        labelBg.setAttribute("stroke", "var(--border-strong)");
+
+        const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        label.setAttribute("text-anchor", "middle");
+        label.setAttribute("dy", "37");
+        label.setAttribute("fill", "var(--text)");
+        label.setAttribute("font-size", "11");
+        label.setAttribute("font-weight", "800");
+        label.textContent = n.name + (n.specialGender ? " ★" : "");
+
+        g.appendChild(ring);
+        g.appendChild(circle);
+        g.appendChild(codeTxt);
+        g.appendChild(labelBg);
+        g.appendChild(label);
+
+        g.addEventListener("pointerdown", (ev) => {
+          dragNode = n;
+          dragMoved = false;
+          g.style.cursor = "grabbing";
+          ev.stopPropagation();
+        });
+        g.addEventListener("click", () => {
+          if (!dragMoved) selectStudent(n.id);
+        });
+
+        nodeLayer.appendChild(g);
+      });
+
+      window.addEventListener("pointermove", (ev) => {
+        if (!dragNode) return;
+        dragMoved = true;
+        const rect = netSvg.getBoundingClientRect();
+        dragNode.x = Math.max(40, Math.min(rect.width - 40, ev.clientX - rect.left));
+        dragNode.y = Math.max(40, Math.min(rect.height - 52, ev.clientY - rect.top));
+        dragNode.vx = 0; dragNode.vy = 0;
+      });
+      window.addEventListener("pointerup", () => { dragNode = null; });
+
+      highlightNetworkSelection();
+      requestAnimationFrame(tickSimulation);
+    }
+
+    function tickSimulation() {
+      const cx = netWidth / 2;
+      const cy = netHeight / 2;
+
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const a = nodes[i], b = nodes[j];
+          let dx = a.x - b.x;
+          let dy = a.y - b.y;
+          let dist2 = dx * dx + dy * dy + 0.1;
+          let dist = Math.sqrt(dist2);
+          const rep = 4600 / dist2;
+          const fx = (dx / dist) * rep;
+          const fy = (dy / dist) * rep;
+          if (a !== dragNode) { a.vx += fx; a.vy += fy; }
+          if (b !== dragNode) { b.vx -= fx; b.vy -= fy; }
+        }
+      }
+
+      EDGES.forEach(e => {
+        if (currentEdgeFilter !== "all" && e.type !== currentEdgeFilter) return;
+        const a = nodeById[e.source];
+        const b = nodeById[e.target];
+        const dx = b.x - a.x;
+        const dy = b.y - a.y;
+        const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+        const targetDist = e.type === "mention" ? 120 : 185;
+        const strength = e.type === "mention" ? 0.035 : 0.004;
+        const force = (dist - targetDist) * strength;
+        const fx = (dx / dist) * force;
+        const fy = (dy / dist) * force;
+        if (a !== dragNode) { a.vx += fx; a.vy += fy; }
+        if (b !== dragNode) { b.vx -= fx; b.vy -= fy; }
+      });
+
+      nodes.forEach(n => {
+        if (n === dragNode) return;
+        n.vx += (cx - n.x) * 0.008;
+        n.vy += (cy - n.y) * 0.008;
+        n.vx *= 0.86; n.vy *= 0.86;
+        n.x = Math.max(46, Math.min(netWidth - 46, n.x + n.vx));
+        n.y = Math.max(40, Math.min(netHeight - 56, n.y + n.vy));
+      });
+
+      const edgeEls = netSvg.querySelectorAll("#edgeLayer line");
+      edgeEls.forEach(line => {
+        const type = line.dataset.type;
+        const show = currentEdgeFilter === "all" || type === currentEdgeFilter;
+        line.style.display = show ? "block" : "none";
+        if (!show) return;
+        const a = nodeById[line.dataset.source];
+        const b = nodeById[line.dataset.target];
+        line.setAttribute("x1", a.x); line.setAttribute("y1", a.y);
+        line.setAttribute("x2", b.x); line.setAttribute("y2", b.y);
+      });
+
+      const nodeEls = netSvg.querySelectorAll("#nodeLayer g");
+      nodeEls.forEach(g => {
+        const n = nodeById[g.dataset.id];
+        g.setAttribute("transform", `translate(${n.x}, ${n.y})`);
+      });
+
+      requestAnimationFrame(tickSimulation);
+    }
+
+    function highlightNetworkSelection() {
+      const nodeEls = netSvg.querySelectorAll("#nodeLayer g");
+      nodeEls.forEach(g => {
+        g.querySelector(".sel-ring").setAttribute("opacity", g.dataset.id === selectedId ? "1" : "0");
+      });
+      const edgeEls = netSvg.querySelectorAll("#edgeLayer line");
+      edgeEls.forEach(line => {
+        const isAdj = line.dataset.source === selectedId || line.dataset.target === selectedId;
+        const isMention = line.dataset.type === "mention";
+        if (isMention) {
+          line.setAttribute("stroke-opacity", "1");
+        } else {
+          line.setAttribute("stroke-opacity", isAdj ? "0.8" : "0.12");
+          line.setAttribute("stroke-width", isAdj ? "2.1" : "1.1");
+        }
+      });
+    }
+
+    document.querySelectorAll("#networkFilters .filter-pill").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll("#networkFilters .filter-pill").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        currentEdgeFilter = btn.dataset.edge;
+      });
+    });
+
+    // ==========================================
+    // 6. F1 GPS TRACKER MAP
+    // ==========================================
+    const KOREA_POLY = [
+      [37.75,126.40],[37.45,126.60],[37.15,126.65],[36.75,126.15],[36.35,126.50],
+      [35.98,126.65],[35.65,126.50],[35.25,126.40],[34.80,126.38],[34.30,126.55],
+      [34.35,126.75],[34.50,127.30],[34.75,127.75],[34.80,127.95],[34.83,128.42],
+      [34.88,128.68],[35.10,129.05],[35.50,129.40],[36.05,129.45],[36.45,129.40],
+      [36.98,129.42],[37.44,129.18],[37.78,128.92],[38.20,128.60],[38.55,128.42],
+      [38.28,127.95],[38.28,127.20],[38.15,126.95],[37.90,126.70],[37.75,126.55]
+    ];
+    const JEJU_POLY = [
+      [33.50,126.50],[33.52,126.90],[33.32,126.88],[33.24,126.55],[33.28,126.20],[33.42,126.25]
+    ];
+    const SEOUL_POLY = [
+      [37.69,127.04],[37.67,127.11],[37.61,127.11],[37.55,127.17],[37.47,127.14],
+      [37.45,127.04],[37.45,126.92],[37.49,126.82],[37.56,126.79],[37.63,126.90]
+    ];
+    const HANGANG_LINE = [
+      [37.53,127.28],[37.55,127.12],[37.52,127.02],[37.52,126.95],[37.57,126.83],[37.70,126.65]
+    ];
+
+    const METRO_OFFSETS = {
+      park_js: { dx: 26, dy: -8 },
+      park_jy: { dx: -28, dy: 12 },
+      kim_br:  { dx: 0, dy: -22 },
+      shin_dh: { dx: 26, dy: 18 }
+    };
+
+    function renderMap() {
+      const svg = document.getElementById("mapSvg");
+      const rect = svg.getBoundingClientRect();
+      const W = rect.width || 800;
+      const H = rect.height || 620;
+      svg.innerHTML = "";
+
+      const bounds = currentMapMode === "metro"
+        ? { minLat: 37.43, maxLat: 37.96, minLng: 126.78, maxLng: 127.84 }
+        : { minLat: 33.0, maxLat: 38.8, minLng: 125.6, maxLng: 130.0 };
+
+      const cosLat = Math.cos(37 * Math.PI / 180);
+      const dataW = (bounds.maxLng - bounds.minLng) * cosLat;
+      const dataH = bounds.maxLat - bounds.minLat;
+      const pad = 34;
+      const scale = Math.min((W - pad * 2) / dataW, (H - pad * 2) / dataH);
+      const offsetX = (W - dataW * scale) / 2;
+      const offsetY = (H - dataH * scale) / 2;
+
+      function proj(lat, lng) {
+        return [
+          offsetX + (lng - bounds.minLng) * cosLat * scale,
+          offsetY + (bounds.maxLat - lat) * scale
+        ];
+      }
+
+      function polyToPath(pts, close = true) {
+        return pts.map((p, i) => {
+          const [x, y] = proj(p[0], p[1]);
+          return `${i === 0 ? "M" : "L"}${x.toFixed(1)},${y.toFixed(1)}`;
+        }).join(" ") + (close ? " Z" : "");
+      }
+
+      const gridG = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      for (let gx = 0; gx < W; gx += 55) {
+        const l = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        l.setAttribute("x1", gx); l.setAttribute("y1", 0); l.setAttribute("x2", gx); l.setAttribute("y2", H);
+        l.setAttribute("stroke", "var(--map-grid)");
+        gridG.appendChild(l);
+      }
+      for (let gy = 0; gy < H; gy += 55) {
+        const l = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        l.setAttribute("x1", 0); l.setAttribute("y1", gy); l.setAttribute("x2", W); l.setAttribute("y2", gy);
+        l.setAttribute("stroke", "var(--map-grid)");
+        gridG.appendChild(l);
+      }
+      svg.appendChild(gridG);
+
+      const land = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      land.setAttribute("d", polyToPath(KOREA_POLY));
+      land.setAttribute("fill", "var(--map-land)");
+      land.setAttribute("stroke", "var(--border-strong)");
+      land.setAttribute("stroke-width", "1.5");
+      svg.appendChild(land);
+
+      if (currentMapMode === "korea") {
+        const jeju = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        jeju.setAttribute("d", polyToPath(JEJU_POLY));
+        jeju.setAttribute("fill", "var(--map-land)");
+        jeju.setAttribute("stroke", "var(--border-strong)");
+        svg.appendChild(jeju);
+      }
+
+      const seoul = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      seoul.setAttribute("d", polyToPath(SEOUL_POLY));
+      seoul.setAttribute("fill", "var(--map-seoul)");
+      seoul.setAttribute("stroke", "var(--rosso)");
+      seoul.setAttribute("stroke-opacity", "0.35");
+      seoul.setAttribute("stroke-dasharray", "5 3");
+      svg.appendChild(seoul);
+
+      const river = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      river.setAttribute("d", polyToPath(HANGANG_LINE, false));
+      river.setAttribute("fill", "none");
+      river.setAttribute("stroke", "var(--pit-cyan)");
+      river.setAttribute("stroke-opacity", "0.35");
+      river.setAttribute("stroke-width", currentMapMode === "metro" ? "5.5" : "2");
+      river.setAttribute("stroke-linecap", "round");
+      svg.appendChild(river);
+
+      const [sx, sy] = proj(37.54, 126.98);
+      const sLbl = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      sLbl.setAttribute("x", sx); sLbl.setAttribute("y", sy);
+      sLbl.setAttribute("text-anchor", "middle");
+      sLbl.setAttribute("fill", "var(--text-muted)");
+      sLbl.setAttribute("font-family", "Barlow Condensed, sans-serif");
+      sLbl.setAttribute("font-size", currentMapMode === "metro" ? "15" : "11");
+      sLbl.setAttribute("font-weight", "800");
+      sLbl.setAttribute("letter-spacing", "0.18em");
+      sLbl.setAttribute("opacity", "0.45");
+      sLbl.textContent = "SEOUL SECTOR";
+      svg.appendChild(sLbl);
+
+      const [cx, cy] = proj(CAMPUS.lat, CAMPUS.lng);
+      if (currentMapMode === "metro") {
+        [10, 20, 30].forEach(km => {
+          const rPx = (km / 111) * scale;
+          const ring = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+          ring.setAttribute("cx", cx); ring.setAttribute("cy", cy);
+          ring.setAttribute("r", rPx);
+          ring.setAttribute("fill", "none");
+          ring.setAttribute("stroke", "var(--rosso)");
+          ring.setAttribute("stroke-opacity", "0.28");
+          ring.setAttribute("stroke-dasharray", "4 4");
+          svg.appendChild(ring);
+
+          const rTxt = document.createElementNS("http://www.w3.org/2000/svg", "text");
+          rTxt.setAttribute("x", cx + rPx - 6); rTxt.setAttribute("y", cy - 5);
+          rTxt.setAttribute("fill", "var(--rosso)");
+          rTxt.setAttribute("font-family", "JetBrains Mono, monospace");
+          rTxt.setAttribute("font-size", "10");
+          rTxt.setAttribute("font-weight", "700");
+          rTxt.textContent = `${km}KM`;
+          svg.appendChild(rTxt);
+        });
+      }
+
+      STUDENTS.forEach(s => {
+        if (currentMapMode === "metro" && s.regionGroup === "경남") return;
+        const [px, py] = proj(s.lat, s.lng);
+        const off = currentMapMode === "metro" && METRO_OFFSETS[s.id] ? METRO_OFFSETS[s.id] : { dx: 0, dy: 0 };
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", cx); line.setAttribute("y1", cy);
+        line.setAttribute("x2", px + off.dx); line.setAttribute("y2", py + off.dy);
+        line.setAttribute("stroke", s.id === selectedId ? "var(--giallo)" : "var(--rosso)");
+        line.setAttribute("stroke-opacity", s.id === selectedId ? "0.9" : "0.24");
+        line.setAttribute("stroke-width", s.id === selectedId ? "2.4" : "1");
+        if (s.regionGroup === "경남") line.setAttribute("stroke-dasharray", "5 4");
+        svg.appendChild(line);
+      });
+
+      const cg = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      const cDot = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      cDot.setAttribute("x", cx - 8); cDot.setAttribute("y", cy - 8);
+      cDot.setAttribute("width", "16"); cDot.setAttribute("height", "16");
+      cDot.setAttribute("rx", "3");
+      cDot.setAttribute("fill", "var(--rosso)");
+      cDot.setAttribute("stroke", "var(--giallo)");
+      cDot.setAttribute("stroke-width", "2");
+      const cText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      cText.setAttribute("x", cx); cText.setAttribute("y", cy - 14);
+      cText.setAttribute("text-anchor", "middle");
+      cText.setAttribute("fill", "var(--rosso)");
+      cText.setAttribute("font-size", "11");
+      cText.setAttribute("font-weight", "800");
+      cText.textContent = "🏁 KDU PIT (양주)";
+      cg.appendChild(cDot); cg.appendChild(cText);
+      svg.appendChild(cg);
+
+      const regionColor = {
+        "의정부": "var(--giallo)",
+        "서울": "var(--pit-green)",
+        "경기기타": "var(--pit-cyan)",
+        "강원": "var(--purple-sector)",
+        "경남": "var(--purple-sector)"
+      };
+
+      STUDENTS.forEach(s => {
+        if (currentMapMode === "metro" && s.regionGroup === "경남") return;
+        const [rawX, rawY] = proj(s.lat, s.lng);
+        const off = currentMapMode === "metro" && METRO_OFFSETS[s.id] ? METRO_OFFSETS[s.id] : { dx: 0, dy: 0 };
+        const x = rawX + off.dx;
+        const y = rawY + off.dy;
+        const isSel = s.id === selectedId;
+
+        const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        g.style.cursor = "pointer";
+
+        if (isSel) {
+          const pulse = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+          pulse.setAttribute("cx", x); pulse.setAttribute("cy", y);
+          pulse.setAttribute("r", "13");
+          pulse.setAttribute("fill", "var(--rosso)");
+          pulse.classList.add("pulse-circle");
+          g.appendChild(pulse);
+        }
+
+        const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        dot.setAttribute("cx", x); dot.setAttribute("cy", y);
+        dot.setAttribute("r", isSel ? "10.5" : "7.5");
+        dot.setAttribute("fill", isSel ? "var(--rosso)" : regionColor[s.regionGroup]);
+        dot.setAttribute("stroke", isSel ? "var(--giallo)" : "#0c0e13");
+        dot.setAttribute("stroke-width", "2.2");
+
+        const lbl = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        lbl.setAttribute("x", x);
+        lbl.setAttribute("y", y + (off.dy < 0 ? -13 : 19));
+        lbl.setAttribute("text-anchor", "middle");
+        lbl.setAttribute("fill", isSel ? "var(--giallo)" : "var(--text)");
+        lbl.setAttribute("font-size", isSel ? "12.5" : "11");
+        lbl.setAttribute("font-weight", isSel ? "900" : "700");
+        lbl.textContent = currentMapMode === "korea" && s.regionGroup === "의정부" && s.id !== "park_jy"
+          ? "" : `${s.code} ${s.name}`;
+        if (currentMapMode === "korea" && s.id === "park_jy") {
+          lbl.textContent = "의정부(4) · 수도권(13)";
+          lbl.setAttribute("x", x - 48);
+        }
+
+        g.appendChild(dot); g.appendChild(lbl);
+        g.addEventListener("click", () => selectStudent(s.id));
+        svg.appendChild(g);
+      });
+
+      if (currentMapMode === "metro") {
+        const note = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        note.style.cursor = "pointer";
+        const box = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        box.setAttribute("x", W - 224); box.setAttribute("y", H - 64);
+        box.setAttribute("width", "210"); box.setAttribute("height", "50");
+        box.setAttribute("rx", "8");
+        box.setAttribute("fill", "var(--surface-solid)");
+        box.setAttribute("stroke", "var(--purple-sector)");
+        const t1 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        t1.setAttribute("x", W - 212); t1.setAttribute("y", H - 42);
+        t1.setAttribute("fill", "var(--purple-sector)");
+        t1.setAttribute("font-size", "11.5");
+        t1.setAttribute("font-weight", "800");
+        t1.textContent = "🌊 LONG STINT · 거제시: 박정빈";
+        const t2 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        t2.setAttribute("x", W - 212); t2.setAttribute("y", H - 24);
+        t2.setAttribute("fill", "var(--text-muted)");
+        t2.setAttribute("font-size", "10.5");
+        t2.textContent = "클릭하여 텔레메트리 확인 (~330km)";
+        note.appendChild(box); note.appendChild(t1); note.appendChild(t2);
+        note.addEventListener("click", () => selectStudent("park_jb"));
+        svg.appendChild(note);
+      }
+    }
+
+    document.querySelectorAll("#mapModeFilters .filter-pill").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll("#mapModeFilters .filter-pill").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        currentMapMode = btn.dataset.mapmode;
+        renderMap();
+      });
+    });
+
+    // ==========================================
+    // 7. ANALYTICS & DRIVER ROSTER
+    // ==========================================
+    function renderBarChart(containerId, items, total) {
+      const el = document.getElementById(containerId);
+      el.innerHTML = items.map(it => {
+        const pct = Math.round((it.count / total) * 100);
+        return `
+          <div class="bar-row">
+            <div class="bar-label" title="${it.label}">${it.label}</div>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: ${pct}%; background: ${it.color};"></div>
+            </div>
+            <div class="bar-count">${it.count}명</div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderAnalytics() {
+      renderBarChart("regionChart", [
+        { label: "경기 동·북부", count: 5, color: "var(--pit-cyan)" },
+        { label: "경기도 의정부", count: 4, color: "var(--giallo)" },
+        { label: "서울특별시", count: 4, color: "var(--pit-green)" },
+        { label: "강원 춘천시", count: 1, color: "var(--rosso)" },
+        { label: "경남 거제시", count: 1, color: "var(--purple-sector)" }
+      ], 15);
+
+      const hobbyCounts = {};
+      STUDENTS.forEach(s => s.hobbyTags.forEach(t => {
+        hobbyCounts[t] = (hobbyCounts[t] || 0) + 1;
+      }));
+      const hobbyColors = {
+        "음악/감상": "var(--rosso)",
+        "음악/악기": "var(--giallo)",
+        "게임/애니": "var(--purple-sector)",
+        "팬덤/수집": "var(--pit-cyan)",
+        "창작/독서": "var(--pit-green)",
+        "영화/영상": "#fb7185",
+        "운동/힐링": "#a78bfa"
+      };
+      const hobbyItems = Object.entries(hobbyCounts)
+        .sort((a, b) => b[1] - a[1])
+        .map(([label, count]) => ({ label, count, color: hobbyColors[label] || "var(--rosso)" }));
+      renderBarChart("hobbyChart", hobbyItems, 10);
+
+      renderBarChart("treasureChart", [
+        { label: "가족·엄마·동생", count: 7, color: "var(--pit-green)" },
+        { label: "나 자신 (자기애)", count: 4, color: "var(--giallo)" },
+        { label: "동기 직접 지목", count: 2, color: "var(--purple-sector)" },
+        { label: "반려·건강", count: 2, color: "var(--pit-cyan)" }
+      ], 15);
+    }
+
+    let rosterFilter = "all";
+    let searchQuery = "";
+
+    function renderRoster() {
+      const grid = document.getElementById("rosterGrid");
+      if (!grid) return;
+
+      const filtered = STUDENTS.filter(s => {
+        if (rosterFilter === "의정부" && s.regionGroup !== "의정부") return false;
+        if (rosterFilter === "서울" && s.regionGroup !== "서울") return false;
+        if (rosterFilter === "경기기타" && s.regionGroup !== "경기기타") return false;
+        if (rosterFilter === "음악" && !s.hobbyTags.some(t => t.startsWith("음악"))) return false;
+        if (rosterFilter === "개성" && !s.specialGender) return false;
+
+        if (searchQuery) {
+          const hay = `${s.name} ${s.code} ${s.address} ${s.hobbies.join(" ")} ${s.treasure} ${s.gender}`.toLowerCase();
+          if (!hay.includes(searchQuery.toLowerCase())) return false;
+        }
+        return true;
+      });
+
+      grid.innerHTML = filtered.map(s => `
+        <div class="student-card ${s.id === selectedId ? "selected" : ""}" onclick="jumpToNetwork('${s.id}')">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <div class="car-number-box" style="width:42px; height:42px; border-radius:7px;">
+                <div class="car-num" style="font-size:17px;">#${s.num}</div>
+              </div>
+              <div>
+                <div style="font-weight:900; font-size:16px;">${s.name} <span class="mono" style="font-size:11px; color:var(--text-muted);">${s.code}</span></div>
+                <div style="font-size:11px; color:var(--text-muted);">${s.address}</div>
+              </div>
+            </div>
+            <span class="gender-badge ${s.specialGender ? "special" : ""}">${s.gender}</span>
+          </div>
+          <div class="tag-list">
+            ${s.hobbies.map(h => `<span class="tag"><span class="tire-ring"></span>${h}</span>`).join("")}
+          </div>
+          <div style="font-size:12px; color:var(--text-muted); border-top:1px dashed var(--border); padding-top:8px;">
+            🏆 <strong style="color:var(--text);">${escapeHtml(s.treasure)}</strong>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function jumpToNetwork(id) {
+      selectStudent(id);
+      document.querySelector('.tab-btn[data-tab="network"]').click();
+    }
+
+    document.querySelectorAll("#rosterFilters .filter-pill").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll("#rosterFilters .filter-pill").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        rosterFilter = btn.dataset.filter;
+        renderRoster();
+      });
+    });
+
+    document.getElementById("searchInput").addEventListener("input", (e) => {
+      searchQuery = e.target.value.trim();
+      renderRoster();
+    });
+
+    // ==========================================
+    // 8. INIT
+    // ==========================================
+    window.addEventListener("resize", () => {
+      updateNetworkSize();
+      renderMap();
+    });
+
+    initNetworkSvg();
+    renderInspector();
+    renderMap();
+  </script>
+</body>
+</html>
